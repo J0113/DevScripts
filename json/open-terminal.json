@@ -1,0 +1,50 @@
+{
+  "name": "Open Terminal",
+  "slug": "open-terminal",
+  "categories": [
+    20,
+    11
+  ],
+  "date_created": "2026-11-08",
+  "type": "ct",
+  "updateable": true,
+  "privileged": false,
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "interface_port": 8000,
+  "documentation": "https://github.com/open-webui/open-terminal/tree/main/docs",
+  "website": "https://openterminal.sh/",
+  "repository": "https://github.com/open-webui/open-terminal",
+  "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/open-webui.webp",
+  "description": "Open Terminal provides remote command execution, interactive terminals, and file management through an authenticated API. Connect it to Open WebUI to use a terminal and browse files alongside your chats.",
+  "install_methods": [
+    {
+      "type": "default",
+      "script": "ct/open-terminal.sh",
+      "config_path": "/opt/open-terminal_data/.env",
+      "resources": {
+        "cpu": 2,
+        "ram": 1024,
+        "hdd": 4,
+        "os": "Debian",
+        "version": "13"
+      }
+    }
+  ],
+  "default_credentials": {
+    "username": null,
+    "password": null
+  },
+  "notes": [
+    {
+      "text": "In Open WebUI, add the container URL and OPEN_TERMINAL_API_KEY from /opt/open-terminal_data/.env under Admin Settings → Integrations → Open Terminal.",
+      "type": "info"
+    },
+    {
+      "text": "The API key grants root command and file access inside this LXC. Share it only with trusted users; use separate instances when users need isolation.",
+      "type": "warning"
+    }
+  ]
+}
