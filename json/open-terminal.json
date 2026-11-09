@@ -23,7 +23,7 @@
     {
       "type": "default",
       "script": "ct/open-terminal.sh",
-      "config_path": "/opt/open-terminal_data/.env",
+      "config_path": "/etc/open-terminal/open-terminal.env",
       "resources": {
         "cpu": 2,
         "ram": 1024,
@@ -39,11 +39,11 @@
   },
   "notes": [
     {
-      "text": "In Open WebUI, add the container URL and OPEN_TERMINAL_API_KEY from /opt/open-terminal_data/.env under Admin Settings → Integrations → Open Terminal.",
+      "text": "In Open WebUI, add the container URL and OPEN_TERMINAL_API_KEY from /etc/open-terminal/open-terminal.env under Admin Settings → Integrations → Open Terminal.",
       "type": "info"
     },
     {
-      "text": "The API key grants root command and file access inside this LXC. Share it only with trusted users; use separate instances when users need isolation.",
+      "text": "Commands run as open-terminal without sudo. The API key grants access to this user’s files and network; use separate instances for users who need isolation.",
       "type": "warning"
     }
   ]
