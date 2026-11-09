@@ -1,0 +1,56 @@
+{
+  "name": "Bifrost",
+  "slug": "bifrost",
+  "categories": [
+    20
+  ],
+  "date_created": "2026-11-09",
+  "type": "ct",
+  "updateable": true,
+  "privileged": false,
+  "interface_port": 8080,
+  "documentation": "https://docs.getbifrost.ai/",
+  "website": "https://www.getmaxim.ai/bifrost",
+  "repository": "https://github.com/maximhq/bifrost",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "platforms": [
+    "pve"
+  ],
+  "logo": "https://raw.githubusercontent.com/maximhq/bifrost/main/ui/public/bifrost-logo.webp",
+  "description": "Bifrost is a high-performance AI gateway that exposes an OpenAI-compatible API for 20+ LLM providers, with automatic failover, load balancing, semantic caching, virtual keys, budgets, and an MCP gateway. Its web dashboard manages providers, governance, request logs, and observability.",
+  "install_methods": [
+    {
+      "type": "default",
+      "script": "ct/bifrost.sh",
+      "config_path": "/opt/bifrost_data/config.json",
+      "resources": {
+        "cpu": 1,
+        "ram": 1024,
+        "hdd": 4,
+        "os": "Debian",
+        "version": "13"
+      }
+    }
+  ],
+  "default_credentials": {
+    "username": "admin",
+    "password": null
+  },
+  "notes": [
+    {
+      "text": "Sign in to the dashboard as admin with the password from /opt/bifrost_data/.env. That password is applied from the file at every start.",
+      "type": "info"
+    },
+    {
+      "text": "Basic auth protects the dashboard and admin API. /v1 calls need a virtual key in the x-bf-vk header; create one under Workspace → Governance.",
+      "type": "info"
+    },
+    {
+      "text": "Bifrost serves plain HTTP on port 8080. Keep it on a trusted network or put it behind a TLS-terminating reverse proxy before exposing it.",
+      "type": "warning"
+    }
+  ]
+}
