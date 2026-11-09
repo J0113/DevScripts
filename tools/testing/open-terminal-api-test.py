@@ -11,7 +11,10 @@ import websockets
 
 root = Path('/opt/open-terminal_data')
 qa_root = Path(__file__).resolve().parent
-env = dict(line.split('=', 1) for line in (root / '.env').read_text().splitlines())
+env_path = Path('/etc/open-terminal/open-terminal.env')
+if not env_path.exists():
+    env_path = root / '.env'
+env = dict(line.split('=', 1) for line in env_path.read_text().splitlines())
 key = env['OPEN_TERMINAL_API_KEY']
 client = httpx.Client(base_url='http://127.0.0.1:8000', headers={'Authorization': f'Bearer {key}'}, timeout=15)
 results = []
@@ -31,7 +34,7 @@ def output(response):
 
 def state():
     paths = ['.env', 'persist.txt', '.config/open-terminal-qa/settings.json', 'uploads/roundtrip.bin']
-    return {p: hashlib.sha256((root / p).read_bytes()).hexdigest() for p in paths}
+    return {p: hashlib.sha256((env_path if p == '.env' else root / p).read_bytes()).hexdigest() for p in paths}
 
 async def terminal_tests():
     response = client.post('/api/terminals')
@@ -67,7 +70,7 @@ async def terminal_tests():
 checked('public health', client.get('/health').json() == {'status': 'ok'})
 features = client.get('/api/config').json()['features']
 checked('minimal feature flags', features['terminal'] and not any(features[k] for k in ('browser', 'desktop', 'notebooks')))
-checked('generated key and file mode', len(key) == 48 and key.isalnum() and (root / '.env').stat().st_mode & 0o777 == 0o600)
+checked('generated key and file mode', len(key) == 48 and key.isalnum() and env_path.stat().st_mode & 0o777 == 0o600)
 state_path = qa_root / 'persistent-hashes.json'
 if state_path.exists():
     checked('persistent key/files/settings hashes before any writes', state() == json.loads(state_path.read_text()))
