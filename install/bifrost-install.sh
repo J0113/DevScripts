@@ -25,7 +25,7 @@ CURL_TIMEOUT=600 curl_with_retry "https://downloads.getmaxim.ai/bifrost/${bifros
   msg_error "The downloaded Bifrost release failed checksum verification."
   exit 1
 }
-mkdir -p /opt/bifrost_data
+mkdir -p /opt/bifrost /opt/bifrost_data
 install -m 0755 "$tmp_dir/bifrost-http" /opt/bifrost/bifrost-http
 rm -rf "$tmp_dir"
 echo "$bifrost_tag" >~/.bifrost
